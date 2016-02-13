@@ -1,53 +1,72 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
-and may not be redistributed without written permission.*/
+// Copyright 2015 the V8 project authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-//Using SDL and standard IO
-#include <SDL.h>
-#include <gl/glew.h>
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int main( int argc, char* args[] )
-{
-    int width = 640,
-        height = 480;
+#include "libplatform/libplatform.h"
+#include "v8.h"
 
-    SDL_Window* mainwin;
-    SDL_GLContext gContext;
+using namespace v8;
 
-    // Initialize SDL
-    if(SDL_Init( SDL_INIT_VIDEO ) < 0)
-        return 1;
+class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
+ public:
+  virtual void* Allocate(size_t length) {
+    void* data = AllocateUninitialized(length);
+    return data == NULL ? data : memset(data, 0, length);
+  }
+  virtual void* AllocateUninitialized(size_t length) { return malloc(length); }
+  virtual void Free(void* data, size_t) { free(data); }
+};
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,3 );
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,3 );
 
-    mainwin = SDL_CreateWindow(
-            "Test game",
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            width,
-            height,
-            SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
-    );
+int main(int argc, char* argv[]) {
+  // Initialize V8.
+  V8::InitializeICU();
+  V8::InitializeExternalStartupData(argv[0]);
+  Platform* platform = platform::CreateDefaultPlatform();
+  V8::InitializePlatform(platform);
+  V8::Initialize();
 
-    gContext = SDL_GL_CreateContext(mainwin);
+  // Create a new Isolate and make it the current one.
+  ArrayBufferAllocator allocator;
+  Isolate::CreateParams create_params;
+  create_params.array_buffer_allocator = &allocator;
+  Isolate* isolate = Isolate::New(create_params);
+  {
+    Isolate::Scope isolate_scope(isolate);
 
-    glewExperimental = GL_TRUE;
-    glewInit();
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
+    // Create a stack-allocated handle scope.
+    HandleScope handle_scope(isolate);
 
-    SDL_Event event;
-    while(true) {
-        if (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
-                break;
-        }
-    }
+    // Create a new context.
+    Local<Context> context = Context::New(isolate);
 
-    SDL_DestroyWindow(mainwin);
-    SDL_Quit();
+    // Enter the context for compiling and running the hello world script.
+    Context::Scope context_scope(context);
 
-    return 0;
+    // Create a string containing the JavaScript source code.
+    Local<String> source =
+        String::NewFromUtf8(isolate, "'Hello' + ', World!'",
+                            NewStringType::kNormal).ToLocalChecked();
+
+    // Compile the source code.
+    Local<Script> script = Script::Compile(context, source).ToLocalChecked();
+
+    // Run the script to get the result.
+    Local<Value> result = script->Run(context).ToLocalChecked();
+
+    // Convert the result to an UTF8 string and print it.
+    String::Utf8Value utf8(result);
+    printf("%s\n", *utf8);
+  }
+
+  // Dispose the isolate and tear down V8.
+  isolate->Dispose();
+  V8::Dispose();
+  V8::ShutdownPlatform();
+  delete platform;
+  return 0;
 }

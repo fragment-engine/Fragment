@@ -13,17 +13,20 @@ add_executable(Fragment ${SOURCE_FILES})
 find_package("sdl2" REQUIRED)
 find_package("glew" REQUIRED)
 find_package("opengl" REQUIRED)
+find_package("v8" REQUIRED)
 
 set(include_directories PUBLIC
 		${SDL2_INCLUDE_DIR}
 		${GLEW_INCLUDE_PATH}
 		${OPENGL_INCLUDE_DIR}
+		${V8_INCLUDE_DIR}
 )
 
 set(link_libraries PUBLIC
 		${SDL2_LIBRARY}
 		${GLEW_LIBRARY}
 		${OPENGL_LIBRARY}
+		${V8_LIBRARY}
 )
 
 target_include_directories(Fragment ${include_directories})
