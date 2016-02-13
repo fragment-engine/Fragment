@@ -43,13 +43,6 @@ namespace Fragment {
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
 
-        SDL_Event event;
-        while (true) {
-            if (SDL_PollEvent(&event)) {
-                if (event.type == SDL_QUIT)
-                    break;
-            }
-        }
 
         return 0;
     }
