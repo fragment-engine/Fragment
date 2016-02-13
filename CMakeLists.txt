@@ -1,30 +1,36 @@
-cmake_minimum_required(VERSION 3.3)
-project(Fragment)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.3)
+PROJECT(Fragment)
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# Set global variables
+IF(UNIX)
+   SET(CMAKE_CXX_FLAGS 
+      "${CMAKE_CXX_FLAGS} -std=c++11"
+   )
+ENDIF(UNIX)
 
-set(SOURCE_FILES
-	src/main.cpp)
-
-add_executable(Fragment ${SOURCE_FILES})
-
-# Dependencies
-find_package("sdl2" REQUIRED)
-find_package("glew" REQUIRED)
-find_package("opengl" REQUIRED)
-
-set(include_directories PUBLIC
-		${SDL2_INCLUDE_DIR}
-		${GLEW_INCLUDE_PATH}
-		${OPENGL_INCLUDE_DIR}
+SET(CMAKE_MODULE_PATH 
+   ${CMAKE_SOURCE_DIR}/cmake/
 )
 
-set(link_libraries PUBLIC
-		${SDL2_LIBRARY}
-		${GLEW_LIBRARY}
-		${OPENGL_LIBRARY}
+SET(Fragment_SOURCE_DIR 
+   ${PROJECT_SOURCE_DIR}/src
 )
 
-target_include_directories(Fragment ${include_directories})
-target_link_libraries(Fragment ${link_libraries})
+SET(Fragment_INCLUDE_DIR 
+   ${Fragment_SOURCE_DIR}/include
+)
+
+SET(Fragment_HEADER_FILES
+   ${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
+)
+
+# Find package dependencies 
+FIND_PACKAGE("sdl2"        REQUIRED)
+FIND_PACKAGE("glew"        REQUIRED)
+FIND_PACKAGE("opengl"      REQUIRED)
+FIND_PACKAGE("unittestpp"  REQUIRED)
+
+# Add sub directories
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(demo)
