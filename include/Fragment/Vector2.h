@@ -6,8 +6,6 @@ namespace Fragment
       Vector2();
       Vector2(double x, double y);
 
-      int run();
-
    public:
       double x;
       double y;

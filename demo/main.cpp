@@ -1,10 +1,11 @@
 #include <Fragment/Vector2.h>
+#include <Fragment/Window.h>
 
 int main()
 {
-   Fragment::Vector2 v;
+   Fragment::Window win(640, 480);
 
-   v.run();
+   win.init();
 
    return 0;
 }

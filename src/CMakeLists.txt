@@ -5,19 +5,13 @@ FIND_PACKAGE("glew"        REQUIRED)
 FIND_PACKAGE("opengl"      REQUIRED)
 
 SET(Fragment_HEADER_FILES
-   ${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
-)
+		${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
+		${Fragment_INCLUDE_DIR}/Fragment/Window.h)
 
 SET(Fragment_SOURCE_FILES
-   Fragment/Vector2.cpp
-)
+   		Fragment/Vector2.cpp
+		Fragment/Window.cpp)
 
-SET(Fragment_LINK_LIBRARIES 
-	${SDL2_LIBRARY}
-	${GLEW_LIBRARY}
-	${OPENGL_LIBRARY}
-)
-   
 ADD_LIBRARY(Fragment
    ${Fragment_SOURCE_FILES}
    ${Fragment_HEADER_FILES}
@@ -34,5 +28,7 @@ TARGET_INCLUDE_DIRECTORIES(Fragment PRIVATE
 )
 
 TARGET_LINK_LIBRARIES(Fragment PUBLIC
-   ${Fragment_LINK_LIBRARIES}
+	${SDL2_LIBRARY}
+	${GLEW_LIBRARY}
+	${OPENGL_LIBRARY}
 )
