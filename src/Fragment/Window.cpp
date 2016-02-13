@@ -51,10 +51,11 @@ namespace Fragment {
             }
         }
 
-        SDL_DestroyWindow(mainwin);
-        SDL_Quit();
-
         return 0;
     }
 
+    Window::~Window() {
+        SDL_DestroyWindow(mainwin);
+        SDL_Quit();
+    }
 }

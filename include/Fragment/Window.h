@@ -18,6 +18,8 @@ namespace Fragment {
 
     public:
         Window(int width, int height);
+        ~Window();
+
         int init();
     };
 
