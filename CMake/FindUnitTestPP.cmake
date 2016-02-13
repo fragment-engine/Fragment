@@ -1,0 +1,33 @@
+# - Try to find UnitTest++
+#
+#
+
+FIND_PATH (UnitTestPP_INCLUDE_DIR UnitTest++.h
+	/usr/include/unittestPP 
+	/usr/local/include/unittest++ 
+	/opt/local/include/unittest++
+	$ENV{UNITTESTXX_PATH}/src 
+	$ENV{UNITTESTXX_INCLUDE_PATH}
+)
+
+FIND_LIBRARY (UnitTestPP_LIBRARY NAMES UnitTest++ PATHS 
+	/usr/lib 
+	$ENV{UNITTESTXX_PATH} 
+	ENV{UNITTESTXX_LIBRARY_PATH}
+)
+
+SET (UNITTESTPP_FOUND FALSE)
+
+IF (UnitTestPP_INCLUDE_DIR AND UnitTestPP_LIBRARY)
+	SET (UNITTESTPP_FOUND TRUE)
+ENDIF (UnitTestPP_INCLUDE_DIR AND UnitTestPP_LIBRARY)
+
+IF (UNITTESTPP_FOUND)
+   IF (NOT UnitTestPP_FIND_QUIETLY)
+      MESSAGE(STATUS "Found UnitTest++: ${UnitTestPP_LIBRARY}")
+   ENDIF (NOT UnitTestPP_FIND_QUIETLY)
+ELSE (UNITTESTPP_FOUND)
+   IF (UnitTestPP_FIND_REQUIRED)
+      MESSAGE(FATAL_ERROR "Could not find UnitTest++")
+   ENDIF (UnitTestPP_FIND_REQUIRED)
+ENDIF (UNITTESTPP_FOUND)

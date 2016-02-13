@@ -1,0 +1,34 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.3)
+
+FIND_PACKAGE("sdl2"        REQUIRED)
+FIND_PACKAGE("glew"        REQUIRED)
+FIND_PACKAGE("opengl"      REQUIRED)
+
+SET(Fragment_HEADER_FILES
+		${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
+		${Fragment_INCLUDE_DIR}/Fragment/Window.h)
+
+SET(Fragment_SOURCE_FILES
+   		Fragment/Vector2.cpp
+		Fragment/Window.cpp)
+
+ADD_LIBRARY(Fragment
+   ${Fragment_SOURCE_FILES}
+   ${Fragment_HEADER_FILES}
+)
+
+TARGET_INCLUDE_DIRECTORIES(Fragment PUBLIC
+   ${Fragment_INCLUDE_DIR}
+)
+
+TARGET_INCLUDE_DIRECTORIES(Fragment PRIVATE
+	${SDL2_INCLUDE_DIR}
+	${GLEW_INCLUDE_PATH}
+	${OPNGL_INCLUDE_DIR}
+)
+
+TARGET_LINK_LIBRARIES(Fragment PUBLIC
+	${SDL2_LIBRARY}
+	${GLEW_LIBRARY}
+	${OPENGL_LIBRARY}
+)

@@ -1,0 +1,20 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.3)
+
+FIND_PACKAGE("unittestpp" REQUIRED)
+
+SET(FragmentTests_SOURCE_FILES
+   main.cpp
+   TestVector2.cpp
+)
+
+ADD_EXECUTABLE(FragmentTests ${FragmentTests_SOURCE_FILES})
+
+TARGET_INCLUDE_DIRECTORIES(FragmentTests PRIVATE
+	${UnitTestPP_INCLUDE_DIR}
+	${Fragment_INCLUDE_DIR}
+)
+
+TARGET_LINK_LIBRARIES(FragmentTests PRIVATE
+	${UnitTestPP_LIBRARY}
+	Fragment
+)
