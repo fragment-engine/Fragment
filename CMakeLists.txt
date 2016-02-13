@@ -14,10 +14,6 @@ SET(Fragment_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/)
 
 SET(Fragment_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/)
 
-SET(Fragment_HEADER_FILES
-   ${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
-)
-
 # Add sub directories
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(test)

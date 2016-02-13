@@ -4,6 +4,10 @@ FIND_PACKAGE("sdl2"        REQUIRED)
 FIND_PACKAGE("glew"        REQUIRED)
 FIND_PACKAGE("opengl"      REQUIRED)
 
+SET(Fragment_HEADER_FILES
+   ${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
+)
+
 SET(Fragment_SOURCE_FILES
    Fragment/Vector2.cpp
 )
