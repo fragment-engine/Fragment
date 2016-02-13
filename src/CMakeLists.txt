@@ -1,7 +1,11 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.3)
 
+FIND_PACKAGE("sdl2"        REQUIRED)
+FIND_PACKAGE("glew"        REQUIRED)
+FIND_PACKAGE("opengl"      REQUIRED)
+
 SET(Fragment_SOURCE_FILES
-   Vector2.cpp
+   Fragment/Vector2.cpp
 )
 
 SET(Fragment_LINK_LIBRARIES 
@@ -13,7 +17,7 @@ SET(Fragment_LINK_LIBRARIES
 ADD_LIBRARY(Fragment
    ${Fragment_SOURCE_FILES}
    ${Fragment_HEADER_FILES}
- )
+)
 
 TARGET_INCLUDE_DIRECTORIES(Fragment PUBLIC
    ${Fragment_INCLUDE_DIR}
