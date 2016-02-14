@@ -5,20 +5,24 @@
 #ifndef FRAGMENT_WINDOW_H
 #define FRAGMENT_WINDOW_H
 
+#include <memory>
+#include <string>
+
 class SDL_Window;
-typedef void *SDL_GLContext;
 
 namespace Fragment {
 
     class Window {
     private:
-        int width, height;
-        SDL_Window* mainwin;
-        SDL_GLContext gContext;
+        class Impl;
+        std::unique_ptr<Impl> _impl;
 
     public:
-        Window(int width, int height);
+        Window(int width, int height, std::string title);
         ~Window();
+        int getWidth();
+        int getHeight();
+        SDL_Window* getWindow();
 
         int init();
     };

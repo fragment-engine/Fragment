@@ -3,11 +3,15 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.3)
 ADD_EXECUTABLE(FragmentDemo main.cpp)
 
 FIND_PACKAGE("sdl2"        REQUIRED)
+FIND_PACKAGE("opengl"      REQUIRED)
+FIND_PACKAGE("glew"        REQUIRED)
 FIND_PACKAGE("v8"          REQUIRED)
 
 TARGET_INCLUDE_DIRECTORIES(FragmentDemo PRIVATE
         ${SDL2_INCLUDE_DIR}
-        ${Fragment_INCLUDE_DIR}
-        ${V8_INCLUDE_DIR})
+        ${OPENGL_LIBRARY}
+        ${GLEW_INCLUDE_PATH}
+        ${V8_INCLUDE_DIR}
+        ${Fragment_INCLUDE_DIR})
 
 TARGET_LINK_LIBRARIES(FragmentDemo PUBLIC Fragment ${V8_LIBRARY})

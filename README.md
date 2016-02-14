@@ -1,6 +1,6 @@
 # Fragment
 
-JavaScript based game engine.
+An open-source JavaScript based game engine
 
 ## Dependencies
 
