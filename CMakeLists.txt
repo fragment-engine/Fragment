@@ -10,8 +10,6 @@ ENDIF(UNIX)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 
-SET(Fragment_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src/)
-
 SET(Fragment_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/)
 
 # Add sub directories
