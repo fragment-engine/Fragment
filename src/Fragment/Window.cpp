@@ -9,7 +9,16 @@
 
 namespace Fragment {
 
-    Window::Window(int width, int height) : width(width), height(height) {
+    class Window::Impl {
+    public:
+        int width, height;
+        SDL_Window* mainwin;
+        SDL_GLContext gContext;
+
+        Impl(int width, int height) : width(width), height(height) { }
+    };
+
+    Window::Window(int width, int height) : _impl(new Impl(width, height)) {
 
     }
 
@@ -26,16 +35,16 @@ namespace Fragment {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
-        mainwin = SDL_CreateWindow(
+        _impl->mainwin = SDL_CreateWindow(
                 "Test game",
                 SDL_WINDOWPOS_CENTERED,
                 SDL_WINDOWPOS_CENTERED,
-                width,
-                height,
+                _impl->width,
+                _impl->height,
                 SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
         );
 
-        gContext = SDL_GL_CreateContext(mainwin);
+        _impl->gContext = SDL_GL_CreateContext(_impl->mainwin);
 
         glewExperimental = GL_TRUE;
         int glew_init = glewInit();
@@ -43,12 +52,11 @@ namespace Fragment {
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
 
-
         return 0;
     }
 
     Window::~Window() {
-        SDL_DestroyWindow(mainwin);
+        SDL_DestroyWindow(_impl->mainwin);
         SDL_Quit();
     }
 }
