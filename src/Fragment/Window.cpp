@@ -6,6 +6,7 @@
 
 #include <gl/glew.h>
 #include <SDL.h>
+#include <iostream>
 
 namespace Fragment {
 
@@ -14,11 +15,12 @@ namespace Fragment {
         int width, height;
         SDL_Window* mainwin;
         SDL_GLContext gContext;
+        std::string title;
 
-        Impl(int width, int height) : width(width), height(height) { }
+        Impl(int width, int height, std::string title) : width(width), height(height), title(title) { }
     };
 
-    Window::Window(int width, int height) : _impl(new Impl(width, height)) {
+    Window::Window(int width, int height, std::string title) : _impl(new Impl(width, height, title)) {
 
     }
 
@@ -36,7 +38,7 @@ namespace Fragment {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
         _impl->mainwin = SDL_CreateWindow(
-                "Test game",
+                _impl->title.c_str(),
                 SDL_WINDOWPOS_CENTERED,
                 SDL_WINDOWPOS_CENTERED,
                 _impl->width,
@@ -47,10 +49,17 @@ namespace Fragment {
         _impl->gContext = SDL_GL_CreateContext(_impl->mainwin);
 
         glewExperimental = GL_TRUE;
-        int glew_init = glewInit();
+        glewInit();
+
+        // glewInit might throw and invalid enumerant error,
+        // this is to be expected. Source: https://www.opengl.org/wiki/OpenGL_Loading_Library
+        // Let's consume the error:
+        glGetError();
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
+
+        std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
         return 0;
     }
@@ -58,5 +67,17 @@ namespace Fragment {
     Window::~Window() {
         SDL_DestroyWindow(_impl->mainwin);
         SDL_Quit();
+    }
+
+    int Window::getWidth() {
+        return _impl->width;
+    }
+
+    int Window::getHeight() {
+        return _impl->height;
+    }
+
+    SDL_Window *Window::getWindow() {
+        return _impl->mainwin;
     }
 }

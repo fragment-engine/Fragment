@@ -6,6 +6,9 @@
 #define FRAGMENT_WINDOW_H
 
 #include <memory>
+#include <string>
+
+class SDL_Window;
 
 namespace Fragment {
 
@@ -15,8 +18,11 @@ namespace Fragment {
         std::unique_ptr<Impl> _impl;
 
     public:
-        Window(int width, int height);
+        Window(int width, int height, std::string title);
         ~Window();
+        int getWidth();
+        int getHeight();
+        SDL_Window* getWindow();
 
         int init();
     };

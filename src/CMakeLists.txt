@@ -13,15 +13,12 @@ SET(Fragment_SOURCE_FILES
    		Fragment/Vector2.cpp
 		Fragment/Window.cpp)
 
-
 SET(Fragment_LINK_LIBRARIES 
 	${SDL2_LIBRARY}
 	${GLEW_LIBRARY}
 	${OPENGL_LIBRARY}
 	${SDLIMAGE_LIBRARY}
 )
-  
-
 
 ADD_LIBRARY(Fragment
    ${Fragment_SOURCE_FILES}
