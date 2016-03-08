@@ -1,7 +1,5 @@
 # Custom
 
-deps/
-
 # Created by https://www.gitignore.io/api/macs,linux,osx,vim,windows,sublimetext,visualstudio,intellij,cmake,c++
 
 #!! ERROR: macs is undefined. Use list command to see defined gitignore types !!#
