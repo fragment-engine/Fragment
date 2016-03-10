@@ -10,9 +10,13 @@ ADD_LIBRARY(Fragment
 	Fragment/Vector2.cpp
 	Fragment/Window.cpp
 	Fragment/Script/ScriptEngine.cpp
+	Fragment/Graphics/Shader.cpp
+	Fragment/Graphics/ShaderProgram.cpp
 	${Fragment_INCLUDE_DIR}/Fragment/Vector2.h
 	${Fragment_INCLUDE_DIR}/Fragment/Window.h
 	${Fragment_INCLUDE_DIR}/Fragment/Script/ScriptEngine.h
+	${Fragment_INCLUDE_DIR}/Fragment/Graphics/Shader.h
+	${Fragment_INCLUDE_DIR}/Fragment/Graphics/ShaderProgram.h
 )
 
 TARGET_INCLUDE_DIRECTORIES(Fragment PUBLIC
