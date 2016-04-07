@@ -39,7 +39,7 @@ GLuint Fragment::Graphics::ShaderProgram::programID()
     return m_ProgramID;
 }
 
-GLuint Fragment::Graphics::ShaderProgram::getUniformLocation(std::string name)
+GLint Fragment::Graphics::ShaderProgram::getUniformLocation(std::string name)
 {
     return glGetUniformLocation(programID(), name.c_str());
 }

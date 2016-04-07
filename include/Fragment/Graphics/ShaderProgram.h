@@ -21,7 +21,7 @@ namespace Fragment {
             void linkProgram();
             void useProgram();
             GLuint programID();
-            GLuint getUniformLocation(std::string name);
+            GLint getUniformLocation(std::string name);
 
         private:
             GLuint m_ProgramID;

@@ -30,13 +30,13 @@ Shader::Shader(std::string source, GLenum shaderType)
     fprintf(stderr, "%s\n", &shaderErrorMessage[0]);
 }
 
-Shader Shader::fromSource(std::string source, GLenum shaderType)
+std::shared_ptr<Shader> Shader::fromSource(std::string source, GLenum shaderType)
 {
     std::cout << "Compiling source" << std::endl;
-    return Shader(source, shaderType);
+    return std::shared_ptr<Shader>( new Shader(source, shaderType) );
 }
 
-Shader Shader::fromFile(std::string filepath, GLenum shaderType)
+std::shared_ptr<Shader> Shader::fromFile(std::string filepath, GLenum shaderType)
 {
     std::ifstream fileStream(filepath, std::ios::in);
     if(fileStream.is_open())
@@ -47,11 +47,11 @@ Shader Shader::fromFile(std::string filepath, GLenum shaderType)
         );
 
         std::cout << "Compiling shader: " << filepath << std::endl;
-        return Shader(source, shaderType);
+        return std::shared_ptr<Shader>( new Shader(source, shaderType) );
     }
     else
     {
-        throw "File could not be opened.";
+        throw Fragment::Graphics::FileNotFoundException(filepath);
     }
 }
 

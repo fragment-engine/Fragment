@@ -25,10 +25,8 @@ namespace Fragment {
     }
 
     int Window::init() {
-        int code = SDL_Init(SDL_INIT_VIDEO);
-
         // Initialize SDL
-        if (code < 0)
+        if ( SDL_Init(SDL_INIT_VIDEO) < 0)
         {
             return 1;
         }
